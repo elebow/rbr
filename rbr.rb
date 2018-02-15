@@ -18,10 +18,10 @@ def find_nodes(ast_node, query)
 end
 
 matcher = ARGV[0].to_sym
-lvalue = ARGV[1].to_sym
+name = ARGV[1].to_sym
 root = Parser::CurrentRuby.parse(File.read(ARGV[2]))
 
-nodes = find_nodes(root, matcher => { lvalue: lvalue })
+nodes = find_nodes(root, matcher => { name: name })
 
 nodes.each do |node|
   puts node.pretty_print

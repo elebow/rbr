@@ -8,8 +8,8 @@ class Matchers
 
   # Assignment to a specified lvalue
   def self.assignment(node, conds)
-    lvalue_matches = if conds[:lvalue]
-                       node.children.first == conds[:lvalue]
+    lvalue_matches = if conds[:name]
+                       node.children.first == conds[:name]
                      else
                        true # everything matches if no condition
                      end
@@ -19,8 +19,9 @@ class Matchers
 
   # Node is a literal int, float, or string
   def self.is(node, conds)
-    value_matches = if conds[:value]
-                      node.children.first == conds[:value]
+    value_matches = if conds[:name]
+                      # Ruby symbols can't start with a number, so #to_s first
+                      node.children.first.to_s.to_sym == conds[:name]
                     else
                       true # everything matches if no condition
                     end
