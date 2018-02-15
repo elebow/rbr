@@ -8,6 +8,10 @@ class Node
     %i[lvasgn ivasgn cvasgn gvasgn casgn masgn].include? @ast_node.type
   end
 
+  def literal?
+    %i[int float str].include? @ast_node.type
+  end
+
   def nil?
     @ast_node.nil? || !(@ast_node.is_a? Parser::AST::Node)
   end
