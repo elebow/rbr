@@ -39,4 +39,15 @@ class Matchers
 
     node.const? && name_matches
   end
+
+  # Anything other than a string
+  def self.not_str(node, conds)
+    return false if node.str?
+
+    if conds[:name]
+      node.children.last == conds[:name]
+    else
+      true # everything matches if no condition specified
+    end
+  end
 end

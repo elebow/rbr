@@ -20,6 +20,10 @@ class Node
     @ast_node.nil? || !(@ast_node.is_a? Parser::AST::Node)
   end
 
+  def str?
+    %i[str dstr xstr].include? @ast_node.type
+  end
+
   def children
     @ast_node.children
   end
