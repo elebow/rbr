@@ -8,6 +8,10 @@ class Node
     %i[lvasgn ivasgn cvasgn gvasgn casgn masgn].include? @ast_node.type
   end
 
+  def const?
+    :const == @ast_node.type
+  end
+
   def literal?
     %i[int float str].include? @ast_node.type
   end

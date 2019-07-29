@@ -28,4 +28,15 @@ class Matchers
 
     node.literal? && value_matches
   end
+
+  # Node is a Ruby constant
+  def self.is_const(node, conds)
+    name_matches = if conds[:name]
+                     node.children.last == conds[:name]
+                   else
+                     true # everything matches if no condition
+                   end
+
+    node.const? && name_matches
+  end
 end
