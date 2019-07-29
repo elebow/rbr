@@ -19,7 +19,7 @@ end
 
 matcher = ARGV[0].to_sym
 name = ARGV[1].to_sym
-root = Parser::CurrentRuby.parse(File.read(ARGV[2]))
+root = Parser::CurrentRuby.parse_file(ARGV[2])
 
 nodes = find_nodes(root, matcher => { name: name })
 
