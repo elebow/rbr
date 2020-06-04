@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Wraps a Parser::AST::Node object and provides convenience methods
 class Node
   def initialize(ast_node)
@@ -14,6 +16,10 @@ class Node
 
   def literal?
     %i[int float str].include? @ast_node.type
+  end
+
+  def method_call?
+    %i[send csend].include? @ast_node.type
   end
 
   def nil?
