@@ -11,21 +11,21 @@ class TestMatchers < Minitest::Test
 
   def test_assignment
     assert_query_matches(
-      { assignment: { name: :@author } },
+      { assignment: :@author },
       ["5: @author = author"]
     )
   end
 
   def test_is
     assert_query_matches(
-      { is: { name: :"5" } },
-      ["12: 5"]
+      { is: :"5" },
+      ["12: 5", "33: 5"]
     )
   end
 
   def test_const
     assert_query_matches(
-      { const: { name: :Math } },
+      { const: :Math },
       ["14: Math",
        "15: Math"]
     )
@@ -33,7 +33,7 @@ class TestMatchers < Minitest::Test
 
   def test_str
     assert_query_matches(
-      { str: { pattern: "ring" } },
+      { str: "ring" },
       ["13: \"a string!\""]
     )
   end

@@ -13,10 +13,10 @@ module Rbr
       return unless check_arg_count
 
       matcher = ARGV[0].to_sym
-      name = ARGV[1].to_sym
+      condition = ARGV[1].to_sym
       root, comments = Parser::CurrentRuby.parse_file_with_comments(ARGV[2])
 
-      nodes = Query.new(matcher => { name: name }).run(root)
+      nodes = Query.new(matcher => condition).run(root)
 
       nodes.each do |node|
         puts node.pretty_print
