@@ -20,6 +20,7 @@ module Rbr
     end
 
     def method_call?
+      #TODO rename to #send?
       %i[send csend].include? @ast_node.type
     end
 
@@ -29,6 +30,10 @@ module Rbr
 
     def str?
       %i[str dstr xstr].include? @ast_node.type
+    end
+
+    def type
+      @ast_node.type
     end
 
     def children

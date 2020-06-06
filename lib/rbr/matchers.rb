@@ -11,16 +11,13 @@ module Rbr
 
     # Updating an ActiveRecord model attribute
     def self.ar_update(node, name)
-      attribute_name = name
-      matches = if attribute_name
-                  node.children.first == attribute_name
-                else
-                  true # everything matches if no condition
-                end
+      return false unless name && node.method_call?
 
-      node.method_call? &&
-        node.children[1] == :update &&
-        node.children[1].is_a_hash_containing_node(children: [:name])
+      ar_update_hash(node, name) ||
+        ar_update_positional(node, name) ||
+        ar_update_dynamic_method(node, name) ||
+        ar_update_attributes(node, name) ||
+        ar_update_hash_element(node, name)
     end
 
     # Assignment to a specified lvalue
@@ -72,6 +69,45 @@ module Rbr
       node.any_child_matches?(
         ->(n) { n.is_a?(String) && n.match?(pattern) }
       )
+    end
+
+    private
+
+    private_class_method def self.ar_update_hash(node, name)
+      return false unless %i[update update! assign_attributes update_attributes
+                             update_attributes! update_columns update_all upsert
+                             upsert_all insert insert! insert_all insert_all!]
+                          .include?(node.children[1])
+
+      hash_arg = if node.children[3]&.type == :hash
+                   node.children[3]
+                 else
+                   node.children[2]
+                 end
+
+      hash_arg.children.any? { |child| child.children[0].children[0] == name }
+    end
+
+    private_class_method def self.ar_update_positional(node, name)
+      return false unless  %i[write_attribute update_attribute update_column]
+                           .include?(node.children[1])
+
+      node.children[2].children[0] == name
+    end
+
+    private_class_method def self.ar_update_dynamic_method(node, name)
+      node.children[1] == "#{name}=".to_sym
+    end
+
+    private_class_method def self.ar_update_attributes(node, name)
+      node.children[1] == :attributes= &&
+      node.children[2].children.any? do |child|
+        child.children[0].children[0] == name
+      end
+    end
+
+    private_class_method def self.ar_update_hash_element(node, name)
+      node.children[1] == :[]= && node.children[2].children[0] == name
     end
   end
 end

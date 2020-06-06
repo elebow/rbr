@@ -38,7 +38,36 @@ class TestMatchers < Minitest::Test
     )
   end
 
+  def test_ar_update
+    assert_query_matches(
+      { ar_update: :title },
+      ['21: book.title = "Great Title"',
+       '22: book.attributes = { title: "Great Title" }',
+       '23: book.assign_attributes(title: "Great Title")',
+       '24: book.write_attribute(:title, "Great Title")',
+       '25: book[:title] = "Great Title"',
+       '26: book.update(title: "Great Title")',
+       '27: book.update!(title: "Great Title")',
+       '28: book.update_attribute(:title, "Great Title")',
+       '29: book.update_attributes(title: "Great Title")',
+       '30: book.update_attributes!(title: "Great Title")',
+       '31: book.update_column(:title, "Great Title")',
+       '32: book.update_columns(title: "Great Title")',
+       '33: Book.update(5, title: "Great Title")',
+       '34: Book.update_all(title: "Great Title")',
+       '35: Book.upsert(title: "Great Title")',
+       '36: Book.upsert_all(title: "Great Title")',
+       '37: Book.insert(title: "Great Title")',
+       '38: Book.insert!(title: "Great Title")',
+       '39: Book.insert_all(title: "Great Title")',
+       '40: Book.insert_all!(title: "Great Title")',
+       '42: book.update(title: "Great Title", author: "Some Author")',
+       '43: update(title: "Great Title", author: "Some Author")']
+    )
+  end
+
 =begin
+  #TODO
   def test_comment
     assert_query_matches(
       { comment: { name: :Math } },
