@@ -46,6 +46,10 @@ module Rbr
       end
     end
 
+    def value
+      @ast_node.children[0]
+    end
+
     def pretty_print
       "#{@ast_node.loc.expression.line}: #{@ast_node.loc.expression.source}"
     end

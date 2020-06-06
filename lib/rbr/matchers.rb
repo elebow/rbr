@@ -24,7 +24,7 @@ module Rbr
     def self.assignment(node, name)
       return false unless node.assignment? && name
 
-      node.children.first == name
+      node.value == name
     end
 
     # Node is a literal int, float, or string
@@ -85,14 +85,14 @@ module Rbr
                    node.children[2]
                  end
 
-      hash_arg.children.any? { |child| child.children[0].children[0] == name }
+      hash_arg.children.any? { |child| child.children[0].value == name }
     end
 
     private_class_method def self.ar_update_positional(node, name)
       return false unless  %i[write_attribute update_attribute update_column]
                            .include?(node.children[1])
 
-      node.children[2].children[0] == name
+      node.children[2].value == name
     end
 
     private_class_method def self.ar_update_dynamic_method(node, name)
@@ -102,12 +102,12 @@ module Rbr
     private_class_method def self.ar_update_attributes(node, name)
       node.children[1] == :attributes= &&
       node.children[2].children.any? do |child|
-        child.children[0].children[0] == name
+        child.children[0].value == name
       end
     end
 
     private_class_method def self.ar_update_hash_element(node, name)
-      node.children[1] == :[]= && node.children[2].children[0] == name
+      node.children[1] == :[]= && node.children[2].value == name
     end
   end
 end
