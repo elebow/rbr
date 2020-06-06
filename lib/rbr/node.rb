@@ -37,7 +37,13 @@ module Rbr
     end
 
     def children
-      @ast_node.children
+      @ast_node.children.map do |child|
+        if child.is_a?(Parser::AST::Node)
+          Rbr::Node.new(child)
+        else
+          child
+        end
+      end
     end
 
     def pretty_print
