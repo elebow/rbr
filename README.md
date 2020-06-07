@@ -14,7 +14,7 @@ $ rbr assignment @author test/fixtures/book.rb
 $ rbr number 5 test/fixtures/book.rb
 12: 5
 
-# find statements that update an ActiveRecord model attribute
+# find statements that update an ActiveRecord model attribute named `title`
 $ rbr ar_update title test/fixtures/book.rb
 21: book.title = "Great Title"
 27: book.update!(title: "Great Title")
