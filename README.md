@@ -6,15 +6,19 @@ constructs.
 ## Usage examples
 
 ```sh
-# find assignment to an lvalue named `@author`
+# assignment to an lvalue named `@author`
 $ rbr assignment @author test/fixtures/book.rb
 5: @author = author
 
-# find a literal int or float
+# literal int or float
 $ rbr number 5 test/fixtures/book.rb
 12: 5
 
-# find statements that update an ActiveRecord model attribute named `title`
+# comments matching the pattern /great/
+$ rbr comment "great" test/fixtures/book.rb
+1: # This is a great class
+
+# statements that update an ActiveRecord model attribute named `title`
 $ rbr ar_update title test/fixtures/book.rb
 21: book.title = "Great Title"
 27: book.update!(title: "Great Title")
