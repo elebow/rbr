@@ -2,10 +2,10 @@
 
 # frozen_string_literal: true
 
+require "find"
 require "parser/current"
-require "rbr/query"
 
-# A semantically-aware code search tool for Ruby
+require "rbr/query"
 
 module Rbr
   class CLI
@@ -14,13 +14,20 @@ module Rbr
 
       matcher = ARGV[0].to_sym
       condition = ARGV[1].to_sym
-      root, comments = Parser::CurrentRuby.parse_file_with_comments(ARGV[2])
 
-      nodes = Query.new(matcher => condition).run(root)
+      filenames.each do |filename|
+        root, comments = Parser::CurrentRuby.parse_file_with_comments(filename)
 
-      nodes.each do |node|
-        puts node.pretty_print
+        matching_nodes = Query.new(matcher => condition).run(root)
+
+        matching_nodes.each { |node| puts node.pretty_print }
       end
+    end
+
+    def self.filenames
+      ARGV[2..].map { |arg| Find.find(arg).to_a }
+               .flatten
+               .select { |filename| File.file?(filename) }
     end
 
     def self.check_arg_count
