@@ -16,52 +16,50 @@ module Rbr
 
     # Updating an ActiveRecord model attribute
     def self.ar_update(node, name)
-      return false unless name && node.method_call?
-
-      ar_update_hash(node, name) ||
-        ar_update_positional(node, name) ||
-        ar_update_dynamic_method(node, name) ||
-        ar_update_attributes(node, name) ||
-        ar_update_hash_element(node, name)
+      name &&
+        node.method_call? &&
+        (
+          ar_update_hash(node, name) ||
+          ar_update_positional(node, name) ||
+          ar_update_dynamic_method(node, name) ||
+          ar_update_attributes(node, name) ||
+          ar_update_hash_element(node, name)
+        )
     end
 
     # Assignment to a specified lvalue
     def self.assignment(node, name)
-      return false unless node.assignment? && name
-
-      node.value == name
+      name &&
+        node.assignment? &&
+        node.value == name
     end
 
     # Node is a literal int, float, or string
     def self.literal(node, value)
-      return false unless node.literal? && value
-
-      # Ruby symbols can't start with a number, so #to_s first
-      node.children.first.to_s.to_sym == value
+      number(node, value) || str(node, value)
     end
 
     # Node is a literal int or float
     def self.number(node, value)
-      return false unless node.number? && value
-
-      # Ruby symbols can't start with a number, so #to_s first
-      node.children.first.to_s.to_sym == value
+      value &&
+        node.number? &&
+        node.value.to_s == value
     end
 
     # Node is a Ruby constant
     def self.const(node, name)
-      return false unless node.const? && name
-
-      node.children.last == name
+      name &&
+        node.const? &&
+        node.children.last == name
     end
 
     # Node is a string
     def self.str(node, pattern)
-      return false unless node.str? && pattern
-
-      node.any_descendant_matches?(
-        ->(n) { n.is_a?(String) && n.match?(pattern) }
-      )
+      pattern &&
+        node.str? &&
+        node.any_descendant_matches?(
+          ->(n) { n.is_a?(String) && n.match?(pattern) }
+        )
     end
 
     # Anything other than a string
