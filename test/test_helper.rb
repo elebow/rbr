@@ -5,13 +5,13 @@ require "pry"
 
 require "rbr/query"
 
-def run_query(query)
-  Rbr::Query.new(query).run(@ast_root)
+def run_query(matcher, condition)
+  Rbr::Query.new(matcher, condition).run(@ast_root)
 end
 
-def assert_query_matches(query, matches)
+def assert_query_matches(matcher, condition, matches)
   assert_equal(
-    run_query(query).map(&:pretty_print),
+    run_query(matcher, condition).map(&:pretty_print),
     matches
   )
 end

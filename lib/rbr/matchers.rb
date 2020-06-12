@@ -3,10 +3,8 @@
 module Rbr
   # methods for determining if a node matches given conditions
   class Matchers
-    def self.match(node, query)
-      query.map do |matcher, condition|
-        send(matcher, node, condition)
-      end.all?  #TODO any? or all?
+    def self.match(node, matcher, condition)
+      send(matcher, node, condition)
     end
 
     # Updating an ActiveRecord model attribute
@@ -57,13 +55,6 @@ module Rbr
       node.any_child_matches?(
         ->(n) { n.is_a?(String) && n.match?(pattern) }
       )
-    end
-
-    # Node is a comment
-    def self.comment(node, conds)
-      return false unless node.comment?
-
-      #TODO
     end
 
     # Anything other than a string

@@ -11,28 +11,32 @@ class TestMatchers < Minitest::Test
 
   def test_assignment
     assert_query_matches(
-      { assignment: :@author },
+      :assignment,
+      :@author,
       ["5: @author = author"]
     )
   end
 
   def test_literal
     assert_query_matches(
-      { literal: :"5" },
+      :literal,
+      :"5",
       ["12: 5", "33: 5", "49: \"5\""]
     )
   end
 
   def test_number
     assert_query_matches(
-      { number: :"5" },
+      :number,
+      :"5",
       ["12: 5", "33: 5"]
     )
   end
 
   def test_const
     assert_query_matches(
-      { const: :Math },
+      :const,
+      :Math,
       ["14: Math",
        "15: Math"]
     )
@@ -40,14 +44,16 @@ class TestMatchers < Minitest::Test
 
   def test_str
     assert_query_matches(
-      { str: "ring" },
+      :str,
+      "ring",
       ["13: \"a string!\""]
     )
   end
 
   def test_ar_update
     assert_query_matches(
-      { ar_update: :title },
+      :ar_update,
+      :title,
       ['21: book.title = "Great Title"',
        '22: book.attributes = { title: "Great Title" }',
        '23: book.assign_attributes(title: "Great Title")',
