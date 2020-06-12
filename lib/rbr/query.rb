@@ -15,7 +15,10 @@ module Rbr
         alias run run_comments
       else
         alias run run_tree
-        @condition = condition.to_sym
+
+        if condition.is_a?(String) && condition.start_with?(":")
+          @condition = condition[1..].to_sym
+        end
       end
     end
 
