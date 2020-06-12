@@ -7,6 +7,13 @@ module Rbr
       send(matcher, node, condition)
     end
 
+    # Method call
+    def self.method_call(node, name)
+      name &&
+        node.method_call? &&
+        node.children[1] == name
+    end
+
     # Updating an ActiveRecord model attribute
     def self.ar_update(node, name)
       return false unless name && node.method_call?

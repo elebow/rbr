@@ -15,8 +15,11 @@ $ rbr number :5 test/fixtures/book.rb
 12: 5
 
 # comments matching the pattern /great/
-$ rbr comment "great" test/fixtures/book.rb
+$ rbr comment great test/fixtures/book.rb
 1: # This is a great class
+
+# find all calls of a method named `great_method`
+$ rbr method_call :great_method test/fixtures/book.rb
 
 # statements that update an ActiveRecord model attribute named `title`
 $ rbr ar_update :title test/fixtures/book.rb

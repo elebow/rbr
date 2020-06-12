@@ -9,6 +9,14 @@ class TestMatchers < Minitest::Test
       Parser::CurrentRuby.parse_file_with_comments("test/fixtures/book.rb")
   end
 
+  def test_method_call
+    assert_query_matches(
+      :method_call,
+      :update!,
+      ["27: book.update!(title: \"Great Title\")"]
+    )
+  end
+
   def test_assignment
     assert_query_matches(
       :assignment,
