@@ -45,4 +45,6 @@ class Book
     book.title
     book.update(author: "Some Author")
   end
+
+  "5"
 end

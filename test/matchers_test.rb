@@ -16,9 +16,16 @@ class TestMatchers < Minitest::Test
     )
   end
 
-  def test_is
+  def test_literal
     assert_query_matches(
-      { is: :"5" },
+      { literal: :"5" },
+      ["12: 5", "33: 5", "49: \"5\""]
+    )
+  end
+
+  def test_number
+    assert_query_matches(
+      { number: :"5" },
       ["12: 5", "33: 5"]
     )
   end

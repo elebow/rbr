@@ -19,6 +19,10 @@ module Rbr
       %i[int float str].include? @ast_node.type
     end
 
+    def number?
+      %i[int float].include? @ast_node.type
+    end
+
     def method_call?
       #TODO rename to #send?
       %i[send csend].include? @ast_node.type

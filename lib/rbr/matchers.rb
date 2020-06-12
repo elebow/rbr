@@ -28,9 +28,16 @@ module Rbr
     end
 
     # Node is a literal int, float, or string
-    # TODO rename. Literal?
-    def self.is(node, value)
+    def self.literal(node, value)
       return false unless node.literal? && value
+
+      # Ruby symbols can't start with a number, so #to_s first
+      node.children.first.to_s.to_sym == value
+    end
+
+    # Node is a literal int or float
+    def self.number(node, value)
+      return false unless node.number? && value
 
       # Ruby symbols can't start with a number, so #to_s first
       node.children.first.to_s.to_sym == value
