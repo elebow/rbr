@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rbr/matchers"
+require "rbr/comment_node"
 require "rbr/node"
 
 module Rbr
@@ -24,6 +25,7 @@ module Rbr
 
     def run_comments(_node, comments)
       comments.select { |comment| comment.text.match?(condition) }
+              .map { |comment| CommentNode.new(comment) }
     end
 
     def run_tree(node, _comments = [])
