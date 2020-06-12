@@ -7,8 +7,12 @@ module Rbr
       @parser_comment = parser_comment
     end
 
+    def expression
+      @parser_comment.loc.expression
+    end
+
     def pretty_print
-      "#{@parser_comment.loc.expression.line}: #{@parser_comment.text}"
+      "#{expression.line}: #{@parser_comment.text}"
     end
   end
 end

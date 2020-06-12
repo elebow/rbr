@@ -45,6 +45,10 @@ module Rbr
       @ast_node.type
     end
 
+    def expression
+      @ast_node.loc.expression
+    end
+
     def children
       @ast_node.children.map do |child|
         if child.is_a?(Parser::AST::Node)
@@ -60,7 +64,7 @@ module Rbr
     end
 
     def pretty_print
-      "#{@ast_node.loc.expression.line}: #{@ast_node.loc.expression.source}"
+      "#{expression.line}: #{expression.source}"
     end
 
     # Call the the proc, passing in this node and all children recursively. Return
