@@ -79,14 +79,11 @@ class TestMatchers < Minitest::Test
     )
   end
 
-=begin
-  #TODO
   def test_comment
     assert_query_matches(
-      { comment: { name: :Math } },
-      ["13: Math",
-       "14: Math"]
+      :comment,
+      "las",
+      ["1: # Book class"]
     )
   end
-=end
 end

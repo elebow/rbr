@@ -6,7 +6,7 @@ require "pry"
 require "rbr/query"
 
 def run_query(matcher, condition)
-  Rbr::Query.new(matcher, condition).run(@ast_root)
+  Rbr::Query.new(matcher, condition).run(@ast_root, @comments)
 end
 
 def assert_query_matches(matcher, condition, matches)
