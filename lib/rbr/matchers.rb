@@ -52,7 +52,7 @@ module Rbr
     def self.str(node, pattern)
       return false unless node.str? && pattern
 
-      node.any_child_matches?(
+      node.any_descendant_matches?(
         ->(n) { n.is_a?(String) && n.match?(pattern) }
       )
     end
@@ -64,7 +64,7 @@ module Rbr
       return false unless pattern
 
       #TODO
-      node.any_child_matches?(
+      node.any_descendant_matches?(
         ->(n) { n.is_a?(String) && n.match?(pattern) }
       )
     end

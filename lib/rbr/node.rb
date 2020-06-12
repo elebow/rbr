@@ -60,9 +60,9 @@ module Rbr
 
     # Call the the proc, passing in this node and all children recursively. Return
     # true if any call evaluates to true.
-    def any_child_matches?(match_proc, root = self)
+    def any_descendant_matches?(match_proc, root = self)
       if root.respond_to?(:children)
-        root.children.any? { |c| any_child_matches?(match_proc, c) }
+        root.children.any? { |c| any_descendant_matches?(match_proc, c) }
       else
         match_proc.call(root)
       end
