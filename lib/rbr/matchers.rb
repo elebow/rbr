@@ -9,18 +9,12 @@ module Rbr
 
     # Method call
     def self.method_call(node, name)
-      name &&
-        node.method_call? &&
-        (
-          node.children[1] == name ||
-          (node.children[1] == :send && node.children[2].value == name)
-        )
+      name && node.method_call?(name)
     end
 
     # Updating an ActiveRecord model attribute
     def self.ar_update(node, name)
       name &&
-        node.method_call? &&
         (
           ar_update_hash(node, name) ||
           ar_update_positional(node, name) ||
@@ -80,10 +74,11 @@ module Rbr
     private
 
     private_class_method def self.ar_update_hash(node, name)
-      return false unless %i[update update! assign_attributes update_attributes
-                             update_attributes! update_columns update_all upsert
-                             upsert_all insert insert! insert_all insert_all!]
-                          .include?(node.children[1])
+      return false unless node.method_call?(
+        %i[update update! assign_attributes update_attributes update_attributes!
+           update_columns update_all upsert upsert_all insert insert! insert_all
+           insert_all!]
+      )
 
       hash_arg = if node.children[3]&.type == :hash
                    node.children[3]
@@ -95,25 +90,26 @@ module Rbr
     end
 
     private_class_method def self.ar_update_positional(node, name)
-      return false unless  %i[write_attribute update_attribute update_column]
-                           .include?(node.children[1])
+      return false unless node.method_call?(
+        %i[write_attribute update_attribute update_column]
+      )
 
       node.children[2].value == name
     end
 
     private_class_method def self.ar_update_dynamic_method(node, name)
-      node.children[1] == "#{name}=".to_sym
+      node.method_call?("#{name}=".to_sym)
     end
 
     private_class_method def self.ar_update_attributes(node, name)
-      node.children[1] == :attributes= &&
-      node.children[2].children.any? do |child|
+      node.method_call?(:attributes=) &&
+      node.children.last.children.any? do |child|
         child.children[0].value == name
       end
     end
 
     private_class_method def self.ar_update_hash_element(node, name)
-      node.children[1] == :[]= && node.children[2].value == name
+      node.method_call?(:[]=) && node.children[-2].value == name
     end
   end
 end

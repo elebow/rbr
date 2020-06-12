@@ -84,7 +84,8 @@ class TestMatchers < Minitest::Test
        '39: Book.insert_all(title: "Great Title")',
        '40: Book.insert_all!(title: "Great Title")',
        '42: book.update(title: "Great Title", author: "Some Author")',
-       '43: update(title: "Great Title", author: "Some Author")']
+       '43: update(title: "Great Title", author: "Some Author")',
+       '50: book.send(:update!, title: "Great Title")']
     )
   end
 

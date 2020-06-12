@@ -23,9 +23,14 @@ module Rbr
       %i[int float].include? @ast_node.type
     end
 
-    def method_call?
-      #TODO rename to #send?
-      %i[send csend].include? @ast_node.type
+    def method_call?(names)
+      %i[send csend].include?(@ast_node.type) &&
+        begin
+          names = [names] unless names.is_a?(Array)
+
+          names.include?(children[1]) ||
+            (children[1] == :send && names.include?(children[2].value))
+        end
     end
 
     def nil?
