@@ -36,7 +36,7 @@ $ rbr method_call :great_method test/fixtures/book.rb
 $ rbr ar_update :title test/fixtures/book.rb
 21: book.title = "Great Title"
 27: book.update!(title: "Great Title")
-31: book.update_column(:title, "Great Title")
+31: book.send(:update_column, :title, "Great Title")
 ```
 
 rbr is the wrong tool for the following situations:
