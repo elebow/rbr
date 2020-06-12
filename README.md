@@ -29,6 +29,8 @@ $ rbr comment great test/fixtures/book.rb
 
 # find all calls of a method named `great_method`
 $ rbr method_call :great_method test/fixtures/book.rb
+27: book.update!(title: "Great Title")
+50: book.send(:update!, title: "Great Title")
 
 # statements that update an ActiveRecord model attribute named `title`
 $ rbr ar_update :title test/fixtures/book.rb

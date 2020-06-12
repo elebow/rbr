@@ -11,7 +11,10 @@ module Rbr
     def self.method_call(node, name)
       name &&
         node.method_call? &&
-        node.children[1] == name
+        (
+          node.children[1] == name ||
+          (node.children[1] == :send && node.children[2].value == name)
+        )
     end
 
     # Updating an ActiveRecord model attribute

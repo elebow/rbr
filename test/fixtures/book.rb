@@ -47,4 +47,5 @@ class Book
   end
 
   "5"
+  book.send(:update!, title: "Great Title")
 end

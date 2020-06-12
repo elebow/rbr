@@ -13,7 +13,8 @@ class TestMatchers < Minitest::Test
     assert_query_matches(
       :method_call,
       :update!,
-      ["27: book.update!(title: \"Great Title\")"]
+      ["27: book.update!(title: \"Great Title\")",
+       "50: book.send(:update!, title: \"Great Title\")"]
     )
   end
 
