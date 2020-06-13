@@ -14,15 +14,20 @@ module Rbr
     end
 
     def start
-      filenames.each do |filename|
+      matching_nodes.each do |filename, nodes|
+        nodes.each { |node| puts "#{filename}:#{node.pretty_print}" }
+      end
+    end
+
+    def matching_nodes
+      filenames.map do |filename|
         root, comments = Parser::CurrentRuby.parse_file_with_comments(filename)
 
-        matching_nodes = Query.new(@matcher, @condition).run(root, comments)
-
-        matching_nodes.each { |node| puts node.pretty_print }
+        [filename, Query.new(@matcher, @condition).run(root, comments)]
       rescue EncodingError
         warn "# Encoding error parsing #{filename}"
-      end
+        [filename, []]
+      end.to_h
     end
 
     def filenames
