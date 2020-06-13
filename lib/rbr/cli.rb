@@ -9,28 +9,30 @@ require "rbr/query"
 
 module Rbr
   class CLI
-    def self.start
-      return unless check_arg_count
+    def initialize
+      check_arg_count
 
-      matcher = ARGV[0].to_sym
-      condition = ARGV[1]
+      @matcher = ARGV[0].to_sym
+      @condition = ARGV[1]
+    end
 
+    def start
       filenames.each do |filename|
         root, comments = Parser::CurrentRuby.parse_file_with_comments(filename)
 
-        matching_nodes = Query.new(matcher, condition).run(root, comments)
+        matching_nodes = Query.new(@matcher, @condition).run(root, comments)
 
         matching_nodes.each { |node| puts node.pretty_print }
       end
     end
 
-    def self.filenames
+    def filenames
       ARGV[2..].map { |arg| Find.find(arg).to_a }
                .flatten
                .select { |filename| File.file?(filename) }
     end
 
-    def self.check_arg_count
+    def check_arg_count
       return true if ARGV.count >= 3
 
       warn <<~USAGE

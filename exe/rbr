@@ -5,4 +5,4 @@
 require "parser/current"
 require "rbr/cli"
 
-Rbr::CLI.start
+Rbr::CLI.new.start
