@@ -59,18 +59,6 @@ module Rbr
         )
     end
 
-    # Anything other than a string
-    def self.not_str(node, pattern)
-      return false if node.str?
-
-      return false unless pattern
-
-      #TODO
-      node.any_descendant_matches?(
-        ->(n) { n.is_a?(String) && n.match?(pattern) }
-      )
-    end
-
     private
 
     private_class_method def self.ar_update_hash(node, name)
