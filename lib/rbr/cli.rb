@@ -2,7 +2,6 @@
 
 # frozen_string_literal: true
 
-require "find"
 require "parser/current"
 
 require "rbr/query"
@@ -27,9 +26,16 @@ module Rbr
     end
 
     def filenames
-      ARGV[2..].map { |arg| Find.find(arg).to_a }
+      ARGV[2..].map { |arg| expand_path(arg) }
                .flatten
                .select { |filename| File.file?(filename) }
+    end
+
+    def expand_path(path)
+      return [path] if File.file?(path)
+
+      # if path is not a file, then glob all .rb files beneath it
+      Dir.glob("#{path}/**/*.rb")
     end
 
     def check_arg_count
