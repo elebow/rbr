@@ -22,6 +22,8 @@ module Rbr
         matching_nodes = Query.new(@matcher, @condition).run(root, comments)
 
         matching_nodes.each { |node| puts node.pretty_print }
+      rescue EncodingError
+        warn "# Encoding error parsing #{filename}"
       end
     end
 
