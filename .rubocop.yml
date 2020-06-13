@@ -9,6 +9,10 @@ AllCops:
   Exclude:
     - "test/fixtures/*"
 
+Metrics/MethodLength:
+  Exclude:
+    - "test/**"
+
 Style/Documentation:
   Exclude:
     - "test/**"

@@ -12,7 +12,7 @@ module Rbr
     end
 
     def const?
-      :const == @ast_node.type
+      @ast_node.type == :const
     end
 
     def literal?
