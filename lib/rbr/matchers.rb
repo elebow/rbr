@@ -74,7 +74,11 @@ module Rbr
                    node.children[2]
                  end
 
-      hash_arg.children.any? { |child| child.children[0].value == name }
+      return false unless hash_arg.is_a?(Node)
+
+      hash_arg.children.any? do |child|
+        child.is_a?(Node) && child.children[0].value == name
+      end
     end
 
     private_class_method def self.ar_update_positional(node, name)
@@ -91,8 +95,9 @@ module Rbr
 
     private_class_method def self.ar_update_attributes(node, name)
       node.method_call?(:attributes=) &&
+      node.children.last.type == :hash &&
       node.children.last.children.any? do |child|
-        child.children[0].value == name
+        child.is_a?(Node) && child.children[0].value == name
       end
     end
 
