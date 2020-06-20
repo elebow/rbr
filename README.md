@@ -5,50 +5,76 @@ constructs.
 
 ## Usage examples
 
+assignment to an lvalue named `@author`
+
 ```sh
-# assignment to an lvalue named `@author`
 $ rbr assignment :@author test/fixtures/book.rb
-5: @author = author
+test/fixtures/book.rb:5: @author = author
+```
 
-# int or float
+int or float with value `5`
+
+```sh
 $ rbr number 5 test/fixtures/book.rb
-12: 5
+test/fixtures/book.rb:12: 5
+```
 
-# string
+string matching the pattern `/ring/`
+
+```sh
 $ rbr string ring test/fixtures/book.rb
-13: "a string!"
+test/fixtures/book.rb:13: "a string!"
+```
 
-# a literal (int, float, or string)
+literal (int, float, or string) with the value `5`
+
+```sh
 $ rbr literal 5 test/fixtures/book.rb
-12: 5
-49: "5"
+test/fixtures/book.rb:12: 5
+test/fixtures/book.rb:49: "5"
+```
 
-# comments matching the pattern /great/
+comment matching the pattern `/great/`
+
+```sh
 $ rbr comment great test/fixtures/book.rb
-1: # This is a great class
+test/fixtures/book.rb:1: # This is a great class
+```
 
-# find all calls of a method named `great_method`
+call of a method named `great_method`
+
+```sh
 $ rbr method_call :great_method test/fixtures/book.rb
-27: book.update!(title: "Great Title")
-50: book.send(:update!, title: "Great Title")
+test/fixtures/book.rb:27: book.great_method
+test/fixtures/book.rb:50: book.send(:great_method)
+```
 
-# statements that update an ActiveRecord model attribute named `title`
+statement that updates an ActiveRecord model attribute named `title`
+
+```sh
 $ rbr ar_update :title test/fixtures/book.rb
-21: book.title = "Great Title"
-27: book.update!(title: "Great Title")
-31: book.send(:update_column, :title, "Great Title")
+test/fixtures/book.rb:21: book.title = "Great Title"
+test/fixtures/book.rb:27: book.update!(title: "Great Title")
+test/fixtures/book.rb:31: book.send(:update_column, :title, "Great Title")
 ```
 
 rbr is the wrong tool for the following situations:
 
+appearance of the string "author" in the source
+
 ```sh
-# find any appearance of the string "author" in the source
 $ grep "author"
+```
 
-# find a symbol named :author
+symbol named :author
+
+```sh
 $ grep ":author"
+```
 
-# find the definition of any function named "publish"
+definition of any function named "publish"
+
+```sh
 $ grep "def publish"
 ```
 
