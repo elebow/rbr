@@ -31,9 +31,15 @@ module Rbr
     end
 
     def filenames
-      ARGV[2..].map { |arg| expand_path(arg) }
-               .flatten
-               .select { |filename| File.file?(filename) }
+      pattern = if ARGV.count > 2
+                  ARGV[2..]
+                else
+                  ["."]
+                end
+
+      pattern.map { |arg| expand_path(arg) }
+             .flatten
+             .select { |filename| File.file?(filename) }
     end
 
     def expand_path(path)
@@ -44,7 +50,7 @@ module Rbr
     end
 
     def check_arg_count
-      return true if ARGV.count >= 3
+      return true if ARGV.count >= 2
 
       warn <<~USAGE
         Usage:
