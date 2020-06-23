@@ -53,7 +53,7 @@ class TestMatchers < Minitest::Test
 
   def test_str
     assert_query_matches(
-      :str,
+      :string,
       "ring",
       ["13: \"a string!\""]
     )

@@ -33,7 +33,7 @@ module Rbr
 
     # Node is a literal int, float, or string
     def self.literal(node, value)
-      number(node, value) || str(node, value)
+      number(node, value) || string(node, value)
     end
 
     # Node is a literal int or float
@@ -51,7 +51,7 @@ module Rbr
     end
 
     # Node is a string
-    def self.str(node, pattern)
+    def self.string(node, pattern)
       pattern &&
         node.str? &&
         node.any_descendant_matches?(
