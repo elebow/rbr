@@ -24,8 +24,8 @@ module Rbr
         root, comments = Parser::CurrentRuby.parse_file_with_comments(filename)
 
         [filename, Query.new(@matcher, @condition).run(root, comments)]
-      rescue EncodingError
-        warn "# Encoding error parsing #{filename}"
+      rescue EncodingError, Parser::SyntaxError => e
+        warn "# Error parsing #{filename}: #{e}"
         [filename, []]
       end.to_h
     end
