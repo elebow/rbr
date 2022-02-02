@@ -6,7 +6,7 @@ class Book
   end
 
   def pretty_print
-    "#{@title} by #{author}"
+    "#{@title} by #{@author}"
   end
 
   5
