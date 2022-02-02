@@ -20,14 +20,14 @@ module Rbr
     end
 
     def matching_nodes
-      filenames.map do |filename|
+      filenames.to_h do |filename|
         root, comments = Parser::CurrentRuby.parse_file_with_comments(filename)
 
         [filename, Query.new(@matcher, @condition).run(root, comments)]
       rescue EncodingError, Parser::SyntaxError => e
         warn "# Error parsing #{filename}: #{e}"
         [filename, []]
-      end.to_h
+      end
     end
 
     def filenames
