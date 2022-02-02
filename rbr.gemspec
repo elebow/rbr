@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.version       = Rbr::VERSION
   spec.authors       = ["Eddie Lebow"]
   spec.email         = ["elebow@users.noreply.github.com"]
+  spec.license       = "GPL-3.0-or-later"
 
   spec.summary       = "Semantically-aware code search tool for Ruby"
   #spec.description   = "TODO: Write a longer description or delete this line."
