@@ -46,6 +46,14 @@ class Book
     book.update(author: "Some Author")
   end
 
+  def ar_update_indirect(params)
+    update(params.slice(:title))
+  end
+
+  def ar_update_method_name_collision
+    update("ggg")
+  end
+
   "5"
   book.send(:update!, title: "Great Title")
 end
