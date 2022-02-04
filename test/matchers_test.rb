@@ -14,7 +14,7 @@ class TestMatchers < Minitest::Test
       :method_call,
       :update!,
       ["27: book.update!(title: \"Great Title\")",
-       "58: book.send(:update!, title: \"Great Title\")"]
+       "57: book.send(:update!, title: \"Great Title\")"]
     )
   end
 
@@ -30,7 +30,7 @@ class TestMatchers < Minitest::Test
     assert_query_matches(
       :literal,
       "5",
-      ["12: 5", "33: 5", "57: \"5\""]
+      ["12: 5", "33: 5", "56: \"5\""]
     )
   end
 
@@ -85,7 +85,7 @@ class TestMatchers < Minitest::Test
        '40: Book.insert_all!(title: "Great Title")',
        '42: book.update(title: "Great Title", author: "Some Author")',
        '43: update(title: "Great Title", author: "Some Author")',
-       '58: book.send(:update!, title: "Great Title")']
+       '57: book.send(:update!, title: "Great Title")']
     )
   end
 

@@ -102,7 +102,7 @@ module Rbr
     end
 
     private_class_method def self.ar_update_hash_element(node, name)
-      node.method_call?(:[]=) && node.children[-2].value == name
+      node.method_call?(:[]=) && node.children[-2].is_a?(Node) && node.children[-2].value == name
     end
   end
 end

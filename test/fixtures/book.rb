@@ -50,9 +50,8 @@ class Book
     update(params.slice(:title))
   end
 
-  def ar_update_method_name_collision
-    update("ggg")
-  end
+  update("ggg")
+  attributes[:title], attributes[:author] = string.split
 
   "5"
   book.send(:update!, title: "Great Title")
