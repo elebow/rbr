@@ -1,1 +1,5 @@
-not_str matcher
+new matchers:
+	not string
+	raw SQL updates
+	text in an if/unless condition
+	symbol or string
