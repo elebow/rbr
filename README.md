@@ -50,13 +50,23 @@ This differs from a file contents search (like grep) in that rbr understands Rub
     test/fixtures/book.rb:50: book.send(:great_method)
     ```
 
-- Find all statements that update an ActiveRecord model attribute named `title`.
+- Find statements that update an ActiveRecord model attribute named `title`.
 
     ```sh
     $ rbr ar_update :title test/fixtures/book.rb
     test/fixtures/book.rb:21: book.title = "Great Title"
     test/fixtures/book.rb:27: book.update!(title: "Great Title")
     test/fixtures/book.rb:31: book.send(:update_column, :title, "Great Title")
+    ```
+
+    Note that this matcher is necessarily incomplete. For example, a parser alone cannot find situations like the following.
+
+    ```ruby
+    def update_record(attrs)
+      record.update(attrs)
+    end
+
+    update_record(title: "Great Author")
     ```
 
 ### rbr is the *wrong tool* for the following situations:
